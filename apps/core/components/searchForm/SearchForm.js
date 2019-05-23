@@ -94,6 +94,7 @@ class SearchForm extends React.Component<Props> {
         this.props.returnDateTo,
         BASIC_ISO_DATE_FORMAT,
       );
+
       if (onSubmit != null) {
         onSubmit({
           dateFrom,
@@ -105,7 +106,7 @@ class SearchForm extends React.Component<Props> {
           tripType,
           travelFrom,
           travelTo,
-          sort: 'QUALITY',
+          sortBy: 'QUALITY',
           limit,
           adults,
           infants,
@@ -116,7 +117,7 @@ class SearchForm extends React.Component<Props> {
         travelTo: qs.stringify(travelTo),
         travelFromName: this.convertLocationsToParams(travelFrom, 'name'),
         travelToName: this.convertLocationsToParams(travelTo, 'name'),
-        sort: 'QUALITY',
+        sortBy: 'QUALITY',
         limit,
         adults,
         infants,
@@ -137,14 +138,61 @@ class SearchForm extends React.Component<Props> {
     }
   };
 
+  handleParamsUpdate = () => {
+    const {
+      travelFrom,
+      travelTo,
+      tripType,
+      adults,
+      infants,
+      limit,
+      onSubmit,
+      nightsInDestinationFrom,
+      nightsInDestinationTo,
+    } = this.props;
+    if (travelFrom == null || travelFrom.length === 0) {
+      this.props.setAlertContent({
+        message: 'Please choose an origin place',
+      });
+    } else {
+      const dateFrom = format(this.props.dateFrom, BASIC_ISO_DATE_FORMAT);
+      const dateTo = format(this.props.dateTo, BASIC_ISO_DATE_FORMAT);
+      const returnDateFrom = format(
+        this.props.returnDateFrom,
+        BASIC_ISO_DATE_FORMAT,
+      );
+      const returnDateTo = format(
+        this.props.returnDateTo,
+        BASIC_ISO_DATE_FORMAT,
+      );
+      if (onSubmit != null) {
+        onSubmit({
+          dateFrom,
+          dateTo,
+          returnDateFrom,
+          returnDateTo,
+          nightsInDestinationFrom,
+          nightsInDestinationTo,
+          tripType,
+          travelFrom,
+          travelTo,
+          sortBy: 'QUALITY',
+          limit,
+          adults,
+          infants,
+        });
+      }
+    }
+  };
+
   render() {
     const desktopLayout = this.props.layout >= LAYOUT.desktop;
     return (
       <>
-        <SearchFormModes />
+        <SearchFormModes onParamsUpdate={this.handleParamsUpdate} />
         <View style={desktopLayout && styles.inputsDesktop}>
-          <Placepickers />
-          <Datepickers />
+          <Placepickers onPlaceSelect={this.handleParamsUpdate} />
+          <Datepickers onDateSelect={this.handleParamsUpdate} />
           <View style={[styles.bottom, desktopLayout && styles.bottomDesktop]}>
             {this.props.showButton && (
               <Button

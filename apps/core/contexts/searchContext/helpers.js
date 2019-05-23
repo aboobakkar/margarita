@@ -2,16 +2,12 @@
 
 import qs from 'qs';
 
-import type { Location } from './SearchContextTypes';
-
 type ParserType = 'Location' | 'Date' | 'number' | 'string';
 
 const PARSER_CONFIG = {
-  travelFrom: 'Location',
-  travelTo: 'Location',
   travelFromName: 'string',
   travelToName: 'string',
-  sort: 'string', // @TODO create sortParser
+  sortBy: 'string', // @TODO create sortParser
   limit: 'number',
   adults: 'number',
   infants: 'number',
@@ -20,16 +16,23 @@ const PARSER_CONFIG = {
   returnDateFrom: 'Date',
   returnDateTo: 'Date',
   bookingToken: 'string',
+  nightsInDestinationFrom: 'number',
+  nightsInDestinationTo: 'number',
+  tripType: 'string',
 };
 
 export function parseURLqueryToState(query: Object) {
   const queryKeys = Object.keys(query);
-
   return queryKeys.reduce((acc, key) => {
-    const parserType = PARSER_CONFIG[key];
+    const parserType = key.match(/travelFrom|travelTo/)
+      ? 'Location'
+      : PARSER_CONFIG[key];
     if (parserType) {
       const parser = getParser(parserType);
-
+      if (parserType === 'Location') {
+        const parserObj: Object = parser(query);
+        return { ...parserObj, ...acc };
+      }
       return { [key]: parser(query[key]), ...acc };
     }
     /* eslint-disable-next-line no-console */
@@ -58,13 +61,13 @@ function getParser(parserType: ParserType) {
   }
 }
 
-export function locationParser(query: string) {
+export function locationParser(query: Object) {
   // @TODO Location validation
   const locationsObject = qs.parse(query);
-  const locationsArray = Object.keys(locationsObject).map<Location>(
-    key => locationsObject[key],
-  );
-  return locationsArray;
+  return {
+    travelFrom: locationsObject.travelFrom,
+    travelTo: locationsObject.travelTo,
+  };
 }
 
 function dateParser(date: string) {

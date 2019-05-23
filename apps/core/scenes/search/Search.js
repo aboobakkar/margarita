@@ -22,7 +22,7 @@ export type SearchParameters = {|
   +tripType: string,
   +travelFrom: ?$ReadOnlyArray<Location>,
   +travelTo: ?$ReadOnlyArray<Location>,
-  +sort: string,
+  +sortBy: string,
   +adults: number,
   +infants: number,
   +limit: number,

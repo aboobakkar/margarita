@@ -91,10 +91,11 @@ class SearchContextProvider extends React.Component<Props, State> {
   static getDefaultState(routerQuery?: ParseFieldsParams) {
     // hydrate state from URL
     if (Platform.OS === 'web' && routerQuery) {
-      return {
+      const state = {
         ...defaultState,
         ...parseURLqueryToState(routerQuery),
       };
+      return state;
     }
     return defaultState;
   }
