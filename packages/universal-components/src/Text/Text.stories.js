@@ -39,6 +39,71 @@ storiesOf('Text', module)
       <Text type="critical">{customText}</Text>
     </React.Fragment>
   ))
+  .add('Accessibility features', () => (
+    <React.Fragment>
+      <Text
+        accessible={true}
+        accessibilityLabel="Level 1"
+        accessibilityLiveRegion="polite"
+        accessibilityRole="header"
+        ariaLevel="1"
+      >
+        Level 1
+      </Text>
+      <Text
+        accessible={true}
+        accessibilityLabel="Level 2"
+        accessibilityLiveRegion="polite"
+        accessibilityRole="header"
+        ariaLevel="2"
+      >
+        Level 2
+      </Text>
+      <Text
+        accessible={true}
+        accessibilityLabel="Level 3"
+        accessibilityLiveRegion="polite"
+        accessibilityRole="header"
+        ariaLevel="3"
+      >
+        Level 3
+      </Text>
+      <Text
+        accessible={true}
+        accessibilityLabel="Level 4"
+        accessibilityLiveRegion="polite"
+        accessibilityRole="header"
+        ariaLevel="4"
+      >
+        Level 4
+      </Text>
+      <Text
+        accessible={true}
+        accessibilityLabel="Level 5"
+        accessibilityLiveRegion="polite"
+        accessibilityRole="header"
+        ariaLevel="5"
+      >
+        Level 5
+      </Text>
+      <Text
+        accessible={true}
+        accessibilityLabel="Level 6"
+        accessibilityLiveRegion="polite"
+        accessibilityRole="header"
+        ariaLevel="6"
+      >
+        Level 6
+      </Text>
+      <Text
+        accessible={true}
+        accessibilityLabel="Normal text"
+        accessibilityLiveRegion="none"
+      >
+        Normal text
+      </Text>
+    </React.Fragment>
+  ))
   .add('Playground', () => {
     const type = select(
       'Type',
@@ -63,6 +128,22 @@ storiesOf('Text', module)
     );
     const uppercase = boolean('Uppercase', false);
     const italic = boolean('Italic', false);
+    const accessible = boolean('Accessible', false);
+    const accessibilityLiveRegion = select(
+      'Accessibility Live Region',
+      [null, 'none', 'polite', 'assertive'],
+      null,
+    );
+    const accessibilityRole = select(
+      'Accessibility Role',
+      [null, 'header'],
+      null,
+    );
+    const ariaLevel = select(
+      'Accessibility level',
+      [null, '1', '2', '3', '4', '5', '6'],
+      null,
+    );
 
     return (
       <Text
@@ -72,6 +153,10 @@ storiesOf('Text', module)
         align={align}
         uppercase={uppercase}
         italic={italic}
+        accessible={accessible}
+        accessibilityLiveRegion={accessibilityLiveRegion}
+        accessibilityRole={accessibilityRole}
+        ariaLevel={ariaLevel}
       >
         {customText}
       </Text>

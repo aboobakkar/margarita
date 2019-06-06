@@ -27,4 +27,9 @@ export type TextType = {|
   +weight?: 'normal' | 'bold',
   +expo?: boolean,
   +theme: Theme,
+  accessible?: boolean,
+  accessibilityLabel?: string,
+  accessibilityLiveRegion?: 'none' | 'polite' | 'assertive',
+  accessibilityRole?: 'header',
+  ariaLevel?: number,
 |};

@@ -33,6 +33,11 @@ const Text = ({
   weight,
   expo,
   theme,
+  accessible,
+  accessibilityLabel,
+  accessibilityLiveRegion,
+  accessibilityRole,
+  ariaLevel,
 }: TextType) => {
   const textStyle = [styles.text];
   if (italic) {
@@ -77,6 +82,11 @@ const Text = ({
       style={textStyle}
       numberOfLines={numberOfLines}
       ellipsizeMode={ellipsizeMode}
+      accessible={accessible}
+      accessibilityLabel={accessibilityLabel}
+      accessibilityLiveRegion={accessibilityLiveRegion}
+      accessibilityRole={accessibilityRole}
+      aria-level={ariaLevel}
     >
       {children}
     </RNText>
